@@ -1,7 +1,7 @@
 [
     {
         "username": "adminUser",
-        "password": "$2a$10$svnJcJDLCC.WaArioXUeoOvo2yF2tVGjViewkQh3Hpa0uxrC75jO2", // password: password
+        "password": "$2a$10$svnJcJDLCC.WaArioXUeoOvo2yF2tVGjViewkQh3Hpa0uxrC75jO2",
         "role": "admin",
         "driver_id": null,
         "resetPasswordToken": null,

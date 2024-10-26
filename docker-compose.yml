@@ -1,6 +1,6 @@
 services:
   rabbitmq:
-    image: rabbitmq:3-management
+    image: rabbitmq:latest
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -17,8 +17,44 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: "mongo"
     volumes:
       - ./data:/data/db
+    restart: always
 
   mongo-seed:
     build: ./mongo-seed
     depends_on:
       - mongo
+
+  c-v2x-rsu:
+    build: ../C-V2X-RSU
+    depends_on:
+      - rabbitmq
+    restart: always
+
+  c-v2x-backend:
+    build: ../C-V2X-Backend
+    ports:
+      - "5000:5000"
+      - "3426:3426"
+    depends_on:
+      - rabbitmq
+      - mongo
+    restart: always
+
+  c-v2x-obu:
+    build:
+      context: ../C-V2X-Fleet-Backend
+      dockerfile: Dockerfile.obu
+    ports:
+      - "8001:8001"
+    depends_on:
+      - rabbitmq
+      - c-v2x-rsu
+      - c-v2x-backend
+
+  c-v2x-car-frontend:
+    build: ../C-V2X-Car-Frontend
+    depends_on:
+      - c-v2x-obu
+      - c-v2x-backend
+    ports:
+      - "3000:3000"
