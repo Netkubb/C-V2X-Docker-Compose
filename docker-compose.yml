@@ -15,8 +15,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "mongo"
       MONGO_INITDB_ROOT_PASSWORD: "mongo"
-    volumes:
-      - ./data:/data/db
     restart: always
 
   mongo-seed:
@@ -58,3 +56,10 @@ services:
       - c-v2x-backend
     ports:
       - "3000:3000"
+
+  c-v2x-control-center:
+    build: ../C-V2X-Frontend
+    depends_on:
+      - c-v2x-backend
+    ports:
+      - "3002:3000"
