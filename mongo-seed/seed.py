@@ -58,6 +58,7 @@ rsus_data = [
         "recommended_speed": "100",
         "latitude": "123.456",
         "longitude": "-45.678",
+        "lane_changing": "0",
         "createdAt": datetime.fromisoformat("2023-01-01T00:00:00")
     }
 ]
