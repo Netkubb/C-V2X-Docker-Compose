@@ -24,12 +24,31 @@ services:
 
   c-v2x-rsu:
     build: ../C-V2X-RSU
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq:rabbitmq@rabbitmq:5672
+      RSU_IDENTIFIER: 62261a65d66c6be0a63c051f
+      RSU_PORT: 5111
+      RSU_LATITUDE: 37.7749
+      RSU_LONGITUDE: -122.4194
     depends_on:
       - rabbitmq
     restart: always
 
   c-v2x-backend:
     build: ../C-V2X-Backend
+    environment:
+      MONGO_URI: mongodb://mongo:mongo@mongo:27017/cv2x?authSource=admin
+      APP_PORT: 5000
+      SOCKET_PORT: 3426
+      RABBITMQ_HOST: amqp://rabbitmq:rabbitmq@rabbitmq:5672
+      JWT_SECRET: thisisasecret
+      JWT_COOKIE_EXPIRE: 1
+      JWT_EXPIRE: 1d
+      NODE_ENV: development
+      INFLUXDB_HOST: http://influxdb:8086/
+      INFLUXDB_BUCKET: mybucket
+      INFLUXDB_ORG: myorg
+      INFLUXDB_TOKEN: KE6ej71xEIxwlt0EIdxfi-lNfRXNNcIkPmHiS5w7KIWJgbHl_brLh-Lt4AGR8qwhXLU3LdrJmu6oQnOGWFCroQ==
     ports:
       - "5000:5000"
       - "3426:3426"
@@ -42,6 +61,15 @@ services:
     build:
       context: ../C-V2X-Fleet-Backend
       dockerfile: Dockerfile.obu
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq:rabbitmq@rabbitmq:5672
+      OBU_SOCKET_PORT: 8001
+      CAR_IDENTIFIER: 5b360fdea392d731829ded18
+      MECH_SOCKET_PORT: 8000
+      MECH_CLIENT_SOCKET_PORT: 12000
+      NEXT_PUBLIC_WEB_SOCKET_URL: ws://c-v2x-backend:3426/
+      RSU_ADDRESS: c-v2x-rsu
+      RSU_PORT: 5111
     ports:
       - "8001:8001"
     depends_on:
@@ -50,7 +78,24 @@ services:
       - c-v2x-backend
 
   # c-v2x-car-frontend:
-  #   build: ../C-V2X-Car-Frontend
+  #   build:
+  #     context: ../C-V2X-Car-Frontend
+  #     args:
+  #       NEXT_PUBLIC_API_URL: http://localhost:5000/api
+  #       # NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
+  #       NEXT_PUBLIC_WEB_SOCKET_URL: ws://localhost:3426/
+  #       NEXT_PUBLIC_API_CAM_URI: http://localhost:3426
+  #       NEXT_PUBLIC_API_SERVER_URI: http://localhost:5000/
+  #       NEXT_PUBLIC_OBU_SOCKET_WS_URL: ws://localhost:8001/
+  #       NEXT_PUBLIC_OBU_SOCKET_HTTP_URL: http://localhost:8001
+  #       NEXT_PUBLIC_CAR_ID: 5b360fdea392d731829ded18
+  #       NEXT_PUBLIC_CAM_FRONT: 5b360fdea392d731829ded19
+  #       NEXT_PUBLIC_CAM_BACK: 2
+  #       NEXT_PUBLIC_CAM_LEFT: 3
+  #       NEXT_PUBLIC_CAM_RIGHT: 4
+  #       NEXT_PUBLIC_CAM_START_WITH: 0
+  #       NEXT_PUBLIC_DRIVER_USERNAME: driverUser1
+  #       NEXT_PUBLIC_DRIVER_PASSWORD: password
   #   depends_on:
   #     - c-v2x-obu
   #     - c-v2x-backend
@@ -59,7 +104,12 @@ services:
   #     - "3000:3000"
 
   c-v2x-control-center:
-    build: ../C-V2X-Frontend
+    build:
+      context: ../C-V2X-Frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:5000/api
+        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: AIzaSyBQ0kAFrCwxD21vFiKeCgj-d-lVnrmojzc
+        NEXT_PUBLIC_WEB_SOCKET_URL: ws://localhost:3426/
     depends_on:
       - c-v2x-backend
     ports:
