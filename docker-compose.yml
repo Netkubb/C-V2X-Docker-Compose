@@ -77,35 +77,33 @@ services:
       - c-v2x-rsu
       - c-v2x-backend
 
-  c-v2x-car-frontend:
-    build:
-      context: ../C-V2X-Car-Frontend
-      args:
-        NEXT_PUBLIC_API_URL: http://localhost:5000/api
-        # NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
-        NEXT_PUBLIC_WEB_SOCKET_URL: ws://localhost:3426/
-        NEXT_PUBLIC_API_CAM_URI: http://localhost:3426
-        NEXT_PUBLIC_API_SERVER_URI: http://localhost:5000/
-        NEXT_PUBLIC_OBU_SOCKET_WS_URL: ws://localhost:8001/
-        NEXT_PUBLIC_OBU_SOCKET_HTTP_URL: http://localhost:8001
-        NEXT_PUBLIC_THUMBNAIL_SERVER_URL: http://localhost:8080
-        NEXT_PUBLIC_DEDICATED_SERVER_URL: http://localhost:8081
-        NEXT_PUBLIC_CAR_ID: 5b360fdea392d731829ded18
-        NEXT_PUBLIC_CAM_FRONT: 5b360fdea392d731829ded19
-        NEXT_PUBLIC_CAM_BACK: 2
-        NEXT_PUBLIC_CAM_LEFT: 3
-        NEXT_PUBLIC_CAM_RIGHT: 4
-        NEXT_PUBLIC_CAM_START_WITH: 0
-        NEXT_PUBLIC_DRIVER_USERNAME: driverUser1
-        NEXT_PUBLIC_DRIVER_PASSWORD: password
-    depends_on:
-      - c-v2x-obu
-      - c-v2x-backend
-      - preview-dedicated-server
-      - preview-thumbnail-server
-      # - rtsp-to-webrtc
-    ports:
-      - "3000:3000"
+  # c-v2x-car-frontend:
+  #   build:
+  #     context: ../C-V2X-Car-Frontend
+  #     args:
+  #       NEXT_PUBLIC_API_URL: http://localhost:5000/api
+  #       # NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
+  #       NEXT_PUBLIC_WEB_SOCKET_URL: ws://localhost:3426/
+  #       NEXT_PUBLIC_API_CAM_URI: http://localhost:3426
+  #       NEXT_PUBLIC_API_SERVER_URI: http://localhost:5000/
+  #       NEXT_PUBLIC_OBU_SOCKET_WS_URL: ws://localhost:8001/
+  #       NEXT_PUBLIC_OBU_SOCKET_HTTP_URL: http://localhost:8001
+  #       NEXT_PUBLIC_CAR_ID: 5b360fdea392d731829ded18
+  #       NEXT_PUBLIC_CAM_FRONT: 5b360fdea392d731829ded19
+  #       NEXT_PUBLIC_CAM_BACK: 2
+  #       NEXT_PUBLIC_CAM_LEFT: 3
+  #       NEXT_PUBLIC_CAM_RIGHT: 4
+  #       NEXT_PUBLIC_CAM_START_WITH: 0
+  #       NEXT_PUBLIC_DRIVER_USERNAME: driverUser1
+  #       NEXT_PUBLIC_DRIVER_PASSWORD: password
+  #   depends_on:
+  #     - c-v2x-obu
+  #     - c-v2x-backend
+  #     - preview-dedicated-server
+  #     - preview-thumbnail-server
+  #     # - rtsp-server
+  #   ports:
+  #     - "3000:3000"
 
   c-v2x-control-center:
     build:
@@ -145,6 +143,15 @@ services:
     build: ../C-V2X-Preview/thumbnailServer
     ports:
       - "8080:8080"
+
+  rtsp-server:
+    image: aler9/rtsp-simple-server
+    container_name: rtsp-server
+    restart: always
+    ports:
+      - "8554:8554" # RTSP port
+    environment:
+      - RTSP_PROTOCOLS=tcp
 
 volumes:
   influxdb_data:
