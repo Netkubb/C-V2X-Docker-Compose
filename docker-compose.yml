@@ -30,6 +30,8 @@ services:
       RSU_PORT: 5111
       RSU_LATITUDE: 37.7749
       RSU_LONGITUDE: -122.4194
+    ports:
+      - "5111:5111"
     depends_on:
       - rabbitmq
     restart: always
@@ -116,6 +118,11 @@ services:
       - c-v2x-backend
     ports:
       - "3002:3000"
+
+  c-v2x-reporter:
+    build: ../C-V2X-Reporter
+    ports:
+      - "8002:80"
 
   # rtsp-to-webrtc:
   #   build: ../RTSPtoWebRTC
