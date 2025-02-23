@@ -152,7 +152,7 @@ services:
       - "8080:8080"
 
   rtsp-server:
-    image: aler9/rtsp-simple-server
+    image: bluenviron/mediamtx
     container_name: rtsp-server
     restart: always
     ports:
