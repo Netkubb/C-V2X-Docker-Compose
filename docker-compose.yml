@@ -22,6 +22,18 @@ services:
     depends_on:
       - mongo
 
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: always
+    ports:
+      - "1883:1883"  # MQTT default port
+      - "9001:9001"  # WebSocket port (optional)
+    volumes:
+      - ./mosquitto/config:/mosquitto/config  # Place your custom mosquitto.conf here
+      - ./mosquitto/data:/mosquitto/data      # Persistent storage for MQTT messages
+      - ./mosquitto/log:/mosquitto/log        # Logs directory
+
   c-v2x-rsu:
     build: ../C-V2X-RSU
     environment:
@@ -34,6 +46,7 @@ services:
       - "5111:5111"
     depends_on:
       - rabbitmq
+      - mosquitto
     restart: always
 
   c-v2x-backend:
@@ -78,6 +91,7 @@ services:
       - rabbitmq
       - c-v2x-rsu
       - c-v2x-backend
+      - mosquitto
 
   # c-v2x-car-frontend:
   #   build:

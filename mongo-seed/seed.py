@@ -56,8 +56,8 @@ rsus_data = [
         "_id": ObjectId("62261a65d66c6be0a63c051f"),
         "name": "RSU01",
         "recommended_speed": "100",
-        "latitude": "123.456",
-        "longitude": "-45.678",
+        "latitude": "13.737868",
+        "longitude": "100.534457",
         "lane_changing": "0",
         "createdAt": datetime.fromisoformat("2023-01-01T00:00:00")
     }
