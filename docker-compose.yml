@@ -39,11 +39,11 @@ services:
     environment:
       RABBITMQ_URL: amqp://rabbitmq:rabbitmq@rabbitmq:5672
       RSU_IDENTIFIER: 62261a65d66c6be0a63c051f
-      # RSU_PORT: 5111
+      RSU_PORT: 5111
       RSU_LATITUDE: 13.737868
       RSU_LONGITUDE: 100.534457
-    # ports:
-    #   - "5111:5111"
+    ports:
+      - "5111:5111"
     depends_on:
       - rabbitmq
       - mosquitto

@@ -2971,3 +2971,12 @@
 1742924291: Client mqttjs_b88b105a closed its connection.
 1742924330: New connection from 172.18.0.12:52152 on port 1883.
 1742924330: New client connected from 172.18.0.12:52152 as mqttjs_c5225834 (p2, c1, k60).
+1742924820: Client mqttjs_95ea13a6 closed its connection.
+1742924821: Client mqttjs_365b85a8 closed its connection.
+1742924821: Client mqttjs_c5225834 closed its connection.
+1742924935: New connection from 172.18.0.11:46390 on port 1883.
+1742924935: New client connected from 172.18.0.11:46390 as mqttjs_0f5507d3 (p2, c1, k60).
+1742924935: New connection from 172.18.0.10:52464 on port 1883.
+1742924935: New client connected from 172.18.0.10:52464 as mqttjs_87be4e40 (p2, c1, k60).
+1742924935: New connection from 172.18.0.15:38026 on port 1883.
+1742924935: New client connected from 172.18.0.15:38026 as mqttjs_39bc6b5f (p2, c1, k60).
