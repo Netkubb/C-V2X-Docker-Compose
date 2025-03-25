@@ -60,6 +60,15 @@ rsus_data = [
         "longitude": "100.534457",
         "lane_changing": "0",
         "createdAt": datetime.fromisoformat("2023-01-01T00:00:00")
+    },
+    {
+        "_id": ObjectId("62261a65d66c6be0a63c051a"),
+        "name": "RSU02",
+        "recommended_speed": "100",
+        "latitude": "14.737868",
+        "longitude": "101.534457",
+        "lane_changing": "0",
+        "createdAt": datetime.fromisoformat("2023-01-01T00:00:00")
     }
 ]
 rsus_collection.insert_many(rsus_data)
