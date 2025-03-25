@@ -142,7 +142,7 @@ services:
       context: ../C-V2X-Frontend
       args:
         NEXT_PUBLIC_API_URL: http://localhost:5000/api
-        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: AIzaSyBQ0kAFrCwxD21vFiKeCgj-d-lVnrmojzc
+        # NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
         NEXT_PUBLIC_WEB_SOCKET_URL: ws://localhost:3426/
     depends_on:
       - c-v2x-backend
